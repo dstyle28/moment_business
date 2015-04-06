@@ -20,8 +20,10 @@ US_FEDERAL_HOLIDAYS = [
 (function () {
 	var moment;
 	moment = this.moment;
-	// moment = (typeof require !== "undefined" && require !== null) &&
-	// 				 !require.amd ? require("moment") : this.moment;
+
+	// businessDiff (mStartDate)
+	// Copyright (c) 2014 leonardosantos
+	// https://github.com/leonardosantos/momentjs-business
 
 	moment.fn.businessDiff = function (param) {
 		param = moment(param);
