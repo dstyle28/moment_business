@@ -15,7 +15,7 @@ US_FEDERAL_HOLIDAYS = [
   "2019-1-1", "2019-1-21", "2019-2-18", "2019-5-27", "2019-7-4", "2019-9-2", "2019-10-14", "2019-11-11", "2019-11-28", "2019-12-25",
   "2020-1-1", "2020-1-20", "2020-2-17", "2020-5-25", "2020-7-3", "2020-9-7", "2020-10-12", "2020-11-11", "2020-11-26", "2020-12-25",
   // More Years? Need to check moment timezone version
-]
+];
 
 (function () {
 	var moment;
@@ -31,7 +31,7 @@ US_FEDERAL_HOLIDAYS = [
 		var start_offset = start.day() - 7;
 		var end_offset = end.day();
 
-		var end_sunday = end.clone().subtract(end_offset 'd');
+		var end_sunday = end.clone().subtract(end_offset, 'd');
 		var start_sunday = start.clone().subtract(start_offset, 'd');
 		var weeks = end_sunday.diff(start_sunday, 'days') / 7;
 
@@ -50,22 +50,24 @@ US_FEDERAL_HOLIDAYS = [
 		return signal * (weeks * 5 + start_offset + end_offset);
 	};
 
-	moment.fn.isWeekday = function()
+	moment.fn.isWeekday = function() {
+		return this.isoWeekday() < 6;
+	};
+
+	moment.fn.isWeekend = function() {
+		return this.isoWeekday() > 5;
+	};
 
 	moment.fn.isBusinessDay = function() {
-		var day = this.clone;
-		if (day.isoWeekday() > 5 || US_FEDERAL_HOLIDAYS.indexOf(day.format('YYYY-M-D')) > -1) {
-			return false;
-		}
-		return true;
+		return (this.isoWeekday() < 5 && US_FEDERAL_HOLIDAYS.indexOf(this.format('YYYY-M-D')) > -1)
 	};
 
 	moment.fn.addBusinessDay = function (days, sign) {
 		if (typeof sign === 'undefined') {
 			sign = '+';
 		}
-		else if !(sign == '-' || sign == '+') {
-			console.error('Unknow signal (' + signal + ').');
+		else if (!(sign == '-' || sign == '+')) {
+			console.error('Unknown signal (' + signal + ').');
 			return;
 		}
 		var date = this.clone();
@@ -91,7 +93,7 @@ US_FEDERAL_HOLIDAYS = [
 	};
 
 	moment.fn.businessSubtract = function(days){
-		return this.businessAdd(days, '-');
+		return this.addBusinessDay(days, '-');
 	};
 
 }).call(this);
