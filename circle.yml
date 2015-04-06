@@ -13,5 +13,5 @@ test:
   override:
     - bundle install:
         timeout: 300
-    - karma start ./karma.conf.js --single-run
+    - karma start ./moment_business/karma.conf.js --single-run
 
