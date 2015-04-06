@@ -5,7 +5,10 @@ machine:
     version: 0.10.32
 
 dependencies:
-  override:
-    - npm install moment --save
+  pre:
+    - npm install
 
+  override:
+    - bundle install:
+        timeout: 300
 
