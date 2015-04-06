@@ -6,9 +6,9 @@ machine:
 
 test:
   pre:
-    - npm install -g karma-cli
     - npm install -g bower
     - npm install
+    - npm install karma-chrome-launcher --save-dev
 
   override:
     - karma start ./moment_business/karma.conf.js --single-run
