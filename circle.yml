@@ -11,7 +11,5 @@ test:
     - npm install
 
   override:
-    - bundle install:
-        timeout: 300
     - karma start ./moment_business/karma.conf.js --single-run
 
