@@ -1,6 +1,7 @@
 /*
  * moment_business
  * The MIT License (MIT)
+ * https://github.com/DaveTian/moment_business
  */
 
 
@@ -49,7 +50,10 @@ US_FEDERAL_HOLIDAYS = [
 		return signal * (weeks * 5 + start_offset + end_offset);
 	};
 
-	moment.fn.isBusinessDay = function(day) {
+	moment.fn.isWeekday = function()
+
+	moment.fn.isBusinessDay = function() {
+		var day = this.clone;
 		if (day.isoWeekday() > 5 || US_FEDERAL_HOLIDAYS.indexOf(day.format('YYYY-M-D')) > -1) {
 			return false;
 		}
@@ -69,8 +73,8 @@ US_FEDERAL_HOLIDAYS = [
 		signal = days< 0? signal*-1:signal;
 		var offset = Math.abs(days);
 
-		// If give day is holiday or weekend.
 		if (offset == 0){
+			// If give day is holiday or weekend.
 			while(!date.isBusinessDay()) {
 				date = date.add(signal, 'days');
 			}
