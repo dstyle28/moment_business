@@ -4,11 +4,14 @@ machine:
   node:
     version: 0.10.32
 
-dependencies:
+test:
   pre:
+    - npm install -g karma
+    - npm install -g bower
     - npm install
 
   override:
     - bundle install:
         timeout: 300
+    - karma start ./karma.conf.js --single-run
 
