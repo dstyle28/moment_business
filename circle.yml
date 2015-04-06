@@ -8,6 +8,7 @@ test:
   pre:
     - npm install -g bower
     - npm install
+    - npm install -g karma-cli
     - npm install karma-chrome-launcher --save-dev
 
   override:
