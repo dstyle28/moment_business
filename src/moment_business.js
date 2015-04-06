@@ -36,16 +36,19 @@ US_FEDERAL_HOLIDAYS = [
 		var weeks = end_sunday.diff(start_sunday, 'days') / 7;
 
 		start_offset = Math.abs(start_offset);
-		if(start_offset == 7)
+		if(start_offset === 7) {
 			start_offset = 5;
-		else if(start_offset == 1)
+		}
+		else if(start_offset === 1) {
 			start_offset = 0;
-		else
+		}
+		else {
 			start_offset -= 2;
+		}
 
-
-		if(end_offset == 6)
+		if(end_offset === 6) {
 			end_offset--;
+		}
 
 		return signal * (weeks * 5 + start_offset + end_offset);
 	};
@@ -59,14 +62,14 @@ US_FEDERAL_HOLIDAYS = [
 	};
 
 	moment.fn.isBusinessDay = function() {
-		return (this.isoWeekday() < 5 && US_FEDERAL_HOLIDAYS.indexOf(this.format('YYYY-M-D')) == -1)
+		return (this.isoWeekday() < 5 && US_FEDERAL_HOLIDAYS.indexOf(this.format('YYYY-M-D')) === -1);
 	};
 
 	moment.fn.addBusinessDay = function (days, sign) {
 		if (typeof sign === 'undefined') {
 			sign = '+';
 		}
-		else if (!(sign == '-' || sign == '+')) {
+		else if (!(sign === '-' || sign === '+')) {
 			console.error('Unknown signal (' + signal + ').');
 			return;
 		}
@@ -75,14 +78,14 @@ US_FEDERAL_HOLIDAYS = [
 		signal = days< 0? signal*-1:signal;
 		var offset = Math.abs(days);
 
-		if (offset == 0){
+		if (offset === 0){
 			// If give day is holiday or weekend.
 			while(!date.isBusinessDay()) {
 				date = date.add(signal, 'days');
 			}
 		}
 		else {
-			while(offset == 0 ) {
+			while(offset === 0 ) {
 				date = date.add(signal, 'days');
 				if(date.isBusinessDay()) {
 					offset-- ;
