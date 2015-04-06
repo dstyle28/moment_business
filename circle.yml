@@ -12,5 +12,5 @@ test:
     - npm install karma-chrome-launcher --save-dev
 
   override:
-    - karma start ./moment_business/karma.conf.js --single-run
+    - karma start ./karma.conf.js --single-run
 
