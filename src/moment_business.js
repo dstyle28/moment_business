@@ -97,7 +97,7 @@ US_FEDERAL_HOLIDAYS = [
 		return date;
 	};
 
-	moment.fn.businessSubtract = function(days){
+	moment.fn.subtractBusinessDay = function(days){
 		return this.addBusinessDay(days, '-');
 	};
 
