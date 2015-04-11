@@ -64,7 +64,7 @@ US_FEDERAL_HOLIDAYS = [
 	};
 
 	moment.fn.isBusinessDay = function() {
-		return (this.isoWeekday() < 5 && US_FEDERAL_HOLIDAYS.indexOf(this.format('YYYY-M-D')) === -1);
+		return (this.isoWeekday() < 6 && US_FEDERAL_HOLIDAYS.indexOf(this.format('YYYY-M-D')) === -1);
 	};
 
 	moment.fn.addBusinessDay = function (days, sign) {
@@ -87,7 +87,7 @@ US_FEDERAL_HOLIDAYS = [
 			}
 		}
 		else {
-			while(offset === 0 ) {
+			while(offset != 0 ) {
 				date = date.add(signal, 'days');
 				if(date.isBusinessDay()) {
 					offset-- ;

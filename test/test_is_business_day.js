@@ -11,6 +11,10 @@ describe("Test for isBusinessDay", function() {
         expect(moment([2014, 11, 25]).isBusinessDay()).toBe(false);
     });
 
+    it("Normal Friday", function() {
+        expect(moment('2015-4-3', 'YYYY-M-D').isBusinessDay()).toBe(true);
+    });
+
     it("Saturday", function() {
         // 2015-03-29
         expect(moment([2015, 2, 28]).isBusinessDay()).toBe(false);
