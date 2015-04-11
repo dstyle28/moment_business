@@ -72,12 +72,12 @@ US_FEDERAL_HOLIDAYS = [
 			sign = '+';
 		}
 		else if (!(sign === '-' || sign === '+')) {
-			console.error('Unknown signal (' + signal + ').');
+			window.console && console.error('Unknown sign (' + sign + ').');
 			return;
 		}
 		var date = this.clone();
-		var signal = sign==='+'? 1:-1;
-		signal = days< 0? signal*-1:signal;
+		var signal = sign === '+' ? 1 : -1;
+		signal = days < 0 ? signal * -1 : signal;
 		var offset = Math.abs(days);
 
 		if (offset === 0){
