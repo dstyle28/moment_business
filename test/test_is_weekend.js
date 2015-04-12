@@ -2,7 +2,7 @@
 
 
 describe("Test for isWeekend", function() {
-    it("Moday", function() {
+    it("Monday", function() {
         expect(moment('2015-04-13').isWeekend()).toBe(false);
     });
 
