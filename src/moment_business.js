@@ -5,7 +5,7 @@
  */
 
 
-US_FEDERAL_HOLIDAYS = [
+var US_FEDERAL_HOLIDAYS = [
   "2013-1-1", "2013-1-21", "2013-2-18", "2013-5-27", "2013-7-4", "2013-9-2", "2013-10-14", "2013-11-11", "2013-11-28", "2013-12-25",
   "2014-1-1", "2014-1-20", "2014-2-17", "2014-5-26", "2014-7-4", "2014-9-1", "2014-10-13", "2014-11-11", "2014-11-27", "2014-12-25",
   "2015-1-1", "2015-1-19", "2015-2-16", "2015-5-25", "2015-7-3", "2015-9-7", "2015-10-12", "2015-11-11", "2015-11-26", "2015-12-25",
@@ -87,7 +87,7 @@ US_FEDERAL_HOLIDAYS = [
 			}
 		}
 		else {
-			while(offset != 0 ) {
+			while(offset !== 0 ) {
 				date = date.add(signal, 'days');
 				if(date.isBusinessDay()) {
 					offset-- ;
@@ -107,6 +107,6 @@ US_FEDERAL_HOLIDAYS = [
 
 	moment.fn.previousBusinessDay = function() {
 		return this.subtractBusinessDay(1);
-	}
+	};
 
 }).call(this);
