@@ -15,6 +15,9 @@ test:
   override:
     - karma start ./karma.conf.js --single-run
 
+  post:
+    - codeclimate < "build/reports/coverage/lcov.info"
+
 general:
   artifacts:
     - "build/reports/coverage"
