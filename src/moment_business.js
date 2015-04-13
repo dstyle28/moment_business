@@ -102,11 +102,13 @@ var US_FEDERAL_HOLIDAYS = [
 	};
 
 	moment.fn.nextBusinessDay = function() {
-		return this.addBusinessDay(1);
+		var date = this.clone();
+		return date.addBusinessDay(1);
 	};
 
 	moment.fn.previousBusinessDay = function() {
-		return this.subtractBusinessDay(1);
+		var date = this.clone();
+		return date.subtractBusinessDay(1);
 	};
 
 }).call(this);
