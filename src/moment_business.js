@@ -21,38 +21,66 @@ var US_FEDERAL_HOLIDAYS = [
 	var moment;
 	moment = this.moment;
 
-	// businessDiff (mStartDate)
-	// Copyright (c) 2014 leonardosantos
-	// https://github.com/leonardosantos/momentjs-business
+	moment.fn.holidaysTo = function(moment_date) {
+		var start_day = moment.min(moment_date, this);
+		var end_day = moment.max(moment_date, this);
+		var holidays = [];
 
-	moment.fn.businessDiff = function (param) {
-		param = moment(param);
-		var signal = param.unix() < this.unix()?1:-1;
-		var start = moment.min(param, this).clone();
-		var end = moment.max(param, this).clone();
-		var start_offset = start.day() - 7;
-		var end_offset = end.day();
-
-		var end_sunday = end.clone().subtract(end_offset, 'd');
-		var start_sunday = start.clone().subtract(start_offset, 'd');
-		var weeks = end_sunday.diff(start_sunday, 'days') / 7;
-
-		start_offset = Math.abs(start_offset);
-		if(start_offset === 7) {
-			start_offset = 5;
-		}
-		else if(start_offset === 1) {
-			start_offset = 0;
-		}
-		else {
-			start_offset -= 2;
+		if (start_day.isSame(end_day, 'day') === true) {
+			return holidays;
 		}
 
-		if(end_offset === 6) {
-			end_offset--;
+		for (var i = 0; i< US_FEDERAL_HOLIDAYS.length; i++) {
+			var current_holiday = moment(US_FEDERAL_HOLIDAYS[i], 'YYYY-MM-DD');
+			if (current_holiday.isAfter(end_day)) {
+				return holidays;
+			}
+			else if (current_holiday.isAfter(start_day)) {
+				holidays.push(current_holiday);
+			}
 		}
 
-		return signal * (weeks * 5 + start_offset + end_offset);
+		return holidays;
+	};
+
+	moment.fn.holidayDiff = function(moment_date) {
+		var start_day = moment.min(this, moment_date);
+		var end_day = moment.max(this, moment_date);
+
+		if (start_day.isSame(end_day, 'day') === true) {
+			return 0;
+		}
+
+		var signal = start_day.isBefore(end_day, 'day') ? 1 : -1;
+
+		return start_day.holidaysTo(end_day) * signal;
+	};
+
+	moment.fn.businessDiff = function (moment_date) {
+		var start_day = moment.min(this, moment_date);
+		var end_day = moment.max(this, moment_date);
+
+		if (start_day.isSame(end_day, 'day') === true) {
+			return 0;
+		}
+
+		var signal = start_day.isBefore(end_day, 'day') ? 1 : -1;
+		var diff_days = end_day.diff(start_day, 'day');
+		var diff_weeks = end_day.diff(start_day, 'week');
+		var extra_days = 0;
+
+		if (start_day.isoWeekday() == 5 || end_day.isoWeekday() == 7) {
+			extra_days = 2;
+		}
+		else if (start_day.isoWeekday() == 6 || end_day.isoWeekday() == 6) {
+			extra_days = 1;
+		}
+
+
+		var days = diff_days - diff_weeks * 2 - start_day.holidayDiff(end_day) - extra_days;
+
+
+		return days >= 0 ? days * signal : 0;
 	};
 
 	moment.fn.isWeekday = function() {
