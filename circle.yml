@@ -16,7 +16,7 @@ test:
     - karma start ./karma.conf.js --single-run
 
   post:
-    - codeclimate < ./build/reports/coverage/lcov.info"
+    - codeclimate < ./build/reports/coverage/Chrome*/lcov.info"
 
 general:
   artifacts:
