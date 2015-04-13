@@ -16,7 +16,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         'node_modules/moment/min/moment-with-locales.js',
-        'src/moment_business.js',
+        'src/*.js',
         'test/*.js'
     ],
 
@@ -25,17 +25,22 @@ module.exports = function(config) {
     exclude: [
     ],
 
+    reporters: ['progress', 'coverage'],
 
-    // preprocess matching files before serving them to the browser
-    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'src/*.js': ['coverage']
     },
 
-
-    // test results reporter to use
-    // possible values: 'dots', 'progress'
-    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    coverageReporter: {
+      dir: 'build/reports/coverage',
+      reporters: [
+        // reporters not supporting the `file` property
+        { type: 'lcov', subdir: 'report-lcov' },
+        { type: 'json', subdir: '.', file: 'report-json' },
+        { type: 'lcovonly', subdir: '.', file: 'report-lcovonly.txt' },
+        { type: 'text-summary', subdir: '.', file: 'text-summary.txt' },
+      ]
+    },
 
 
     // web server port
