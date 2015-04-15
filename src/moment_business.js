@@ -69,17 +69,13 @@ var US_FEDERAL_HOLIDAYS = [
 		var head = start_day.isoWeekday();
 		var tail = end_day.isoWeekday();
 		var total = diff_days + head + (7 - tail);
-		if (total % 7 !== 0) {
-			console.warn("HUGE PROBLEM");
-		}
 		var weeks = total / 7;
 		var workdays = weeks * 5;
 		workdays -= Math.min(5, head);
 		workdays -= Math.max(0, 5 - tail);
+		workdays = workdays - start_day.holidayDiff(end_day);
 
-		var days = workdays - start_day.holidayDiff(end_day);
-
-		return days >= 0 ? days * signal : 0;
+		return workdays >= 0 ? workdays * signal : 0;
 	};
 
 	moment.fn.isWeekday = function() {
