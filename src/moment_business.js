@@ -21,7 +21,7 @@ var US_FEDERAL_HOLIDAYS = [
 	var moment;
 	moment = this.moment;
 
-	moment.fn.holidaysTo = function(moment_date) {
+	moment.fn.holidaysBetween = function(moment_date) {
 		var start_day = moment.min(moment_date, this);
 		var end_day = moment.max(moment_date, this);
 		var holidays = [];
@@ -30,7 +30,7 @@ var US_FEDERAL_HOLIDAYS = [
 			return holidays;
 		}
 
-		for (var i = 0; i< US_FEDERAL_HOLIDAYS.length; i++) {
+		for (var i = 0; i < US_FEDERAL_HOLIDAYS.length; i++) {
 			var current_holiday = moment(US_FEDERAL_HOLIDAYS[i], 'YYYY-MM-DD');
 			if (current_holiday.isAfter(end_day)) {
 				return holidays;
@@ -53,7 +53,7 @@ var US_FEDERAL_HOLIDAYS = [
 
 		var signal = start_day.isBefore(end_day, 'day') ? 1 : -1;
 
-		return (start_day.holidaysTo(end_day).length) * signal;
+		return (start_day.holidaysBetween(end_day).length) * signal;
 	};
 
 	moment.fn.businessDiff = function (moment_date) {
@@ -73,7 +73,7 @@ var US_FEDERAL_HOLIDAYS = [
 		var workdays = weeks * 5;
 		workdays -= Math.min(5, head);
 		workdays -= Math.max(0, 5 - tail);
-		workdays = workdays - start_day.holidayDiff(end_day);
+		workdays -= start_day.holidayDiff(end_day);
 
 		return workdays >= 0 ? workdays * signal : 0;
 	};
@@ -110,7 +110,7 @@ var US_FEDERAL_HOLIDAYS = [
 			}
 		}
 		else {
-			while(offset !== 0 ) {
+			while (offset !== 0) {
 				date = date.add(signal, 'days');
 				if(date.isBusinessDay()) {
 					offset-- ;
