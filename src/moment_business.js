@@ -53,7 +53,7 @@ var US_FEDERAL_HOLIDAYS = [
 
 		var signal = start_day.isBefore(end_day, 'day') ? 1 : -1;
 
-		return start_day.holidaysTo(end_day) * signal;
+		return (start_day.holidaysTo(end_day).length) * signal;
 	};
 
 	moment.fn.businessDiff = function (moment_date) {
@@ -66,19 +66,18 @@ var US_FEDERAL_HOLIDAYS = [
 
 		var signal = start_day.isBefore(end_day, 'day') ? 1 : -1;
 		var diff_days = end_day.diff(start_day, 'day');
-		var diff_weeks = end_day.diff(start_day, 'week');
-		var extra_days = 0;
-
-		if (start_day.isoWeekday() == 5 || end_day.isoWeekday() == 7) {
-			extra_days = 2;
+		var head = start_day.isoWeekday();
+		var tail = end_day.isoWeekday();
+		var total = diff_days + head + (7 - tail);
+		if (total % 7 !== 0) {
+			console.warn("HUGE PROBLEM");
 		}
-		else if (start_day.isoWeekday() == 6 || end_day.isoWeekday() == 6) {
-			extra_days = 1;
-		}
+		var weeks = total / 7;
+		var workdays = weeks * 5;
+		workdays -= Math.min(5, head);
+		workdays -= Math.max(0, 5 - tail);
 
-
-		var days = diff_days - diff_weeks * 2 - start_day.holidayDiff(end_day) - extra_days;
-
+		var days = workdays - start_day.holidayDiff(end_day);
 
 		return days >= 0 ? days * signal : 0;
 	};
