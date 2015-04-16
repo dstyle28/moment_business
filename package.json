@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "description": "An extension library for moment.js",
   "dependencies": {
-    "moment": "~2.9.0"
+    "moment": "~2.10.2"
   },
   "devDependencies": {
     "karma": "~0.10",
