@@ -14,6 +14,12 @@ describe("Test for holidaysTo", function() {
         var holidays = start.holidaysBetween(end);
         expect(holidays.length).toBe(0);
     });
+    it("Same start and end", function() {
+        var start = moment('2020-1-1', 'YYYY-M-D');
+        var end = moment('2022-1-1', 'YYYY-M-D');
+        var holidays = start.holidaysBetween(end);
+        expect(holidays.length).toBe(9);
+    });
     it("1 Holiday", function() {
         var start = moment('2014-12-29', 'YYYY-M-D');
         var end = moment('2015-1-2', 'YYYY-M-D');
