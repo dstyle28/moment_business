@@ -1,7 +1,8 @@
 /*
- * moment_business
- * The MIT License (MIT)
+ * moment_business (v1.0.1)
  * https://github.com/DaveTian/moment_business
+ * The MIT License (MIT)
+ * (c) 2014-2015 Zenefits
  */
 
 
