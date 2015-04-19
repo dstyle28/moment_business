@@ -21,6 +21,12 @@ var US_FEDERAL_HOLIDAYS = [
 	var moment;
 	moment = this.moment;
 
+	/**
+	 * Find holidays between two moment date
+	 *
+	 * @param {moment} moment_date The end date
+	 * @returns {Array}
+	 */
 	moment.fn.holidaysBetween = function(moment_date) {
 		var start_day = moment.min(moment_date, this);
 		var end_day = moment.max(moment_date, this);
