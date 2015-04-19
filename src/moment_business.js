@@ -49,6 +49,15 @@ var US_FEDERAL_HOLIDAYS = [
 		return holidays;
 	};
 
+	/**
+	 * Calculate number(s) of holidays between two moment date
+	 *
+	 * @param {moment} moment_date
+	 * @returns {number} number of holidays between the two moment date
+	 *                   0 - if moment() is the same day as @param moment_date
+	 *                   positive number - if moment() earlier than @param moment_date
+	 *                   negative number - if @param moment_date earlier than moment()
+	 */
 	moment.fn.holidayDiff = function(moment_date) {
 		var start_day = moment.min(this, moment_date);
 		var end_day = moment.max(this, moment_date);
@@ -57,11 +66,20 @@ var US_FEDERAL_HOLIDAYS = [
 			return 0;
 		}
 
-		var signal = start_day.isBefore(end_day, 'day') ? 1 : -1;
+		var signal = start_day.isAfter(end_day, 'day') ? -1 : 1;
 
 		return (start_day.holidaysBetween(end_day).length) * signal;
 	};
 
+	/**
+	 * Calculate number(s) of business days between two moment date
+	 *
+	 * @param {moment} moment_date
+	 * @returns {number} number of holidays between the two moment date
+	 *                   0 - if {moment} *this* is the same day as @param moment_date
+	 *                   positive number - if {moment} *this* is earlier than @param moment_date
+	 *                   negative number - if @param moment_date is earlier than {moment} *this*
+	 */
 	moment.fn.businessDiff = function (moment_date) {
 		var start_day = moment.min(this, moment_date);
 		var end_day = moment.max(this, moment_date);
@@ -70,7 +88,7 @@ var US_FEDERAL_HOLIDAYS = [
 			return 0;
 		}
 
-		var signal = start_day.isBefore(end_day, 'day') ? 1 : -1;
+		var signal = start_day.isAfter(end_day, 'day') ? -1 : 1;
 		var diff_days = end_day.diff(start_day, 'day');
 		var head = start_day.isoWeekday();
 		var tail = end_day.isoWeekday();
@@ -84,18 +102,40 @@ var US_FEDERAL_HOLIDAYS = [
 		return workdays >= 0 ? workdays * signal : 0;
 	};
 
+	/**
+	 * Determine if {moment} *this* is week day
+	 *
+	 * @returns {boolean} - true if if {moment} *this* is week day
+	 */
 	moment.fn.isWeekday = function() {
 		return this.isoWeekday() < 6;
 	};
 
+	/**
+	 * Determine if {moment} *this* is Saturday or Sunday
+	 *
+	 * @returns {boolean} - true if {moment} *this* is Saturday or Sunday or Holiday
+	 */
 	moment.fn.isWeekend = function() {
 		return this.isoWeekday() > 5;
 	};
 
+	/**
+	 * Determine if {moment} *this* is business day
+	 *
+	 * @returns {boolean} - true if {moment} *this* is a business day
+	 */
 	moment.fn.isBusinessDay = function() {
 		return (this.isoWeekday() < 6 && US_FEDERAL_HOLIDAYS.indexOf(this.format('YYYY-M-D')) === -1);
 	};
 
+	/**
+	 * Find the business day which is n days from {moment} *this*
+	 *
+	 * @param {int} days: number of days
+	 * @param {string} sign [optional]: '+' or '-'
+	 * @returns {moment} - the nth business day from {moment} *this*
+	 */
 	moment.fn.addBusinessDay = function (days, sign) {
 		if (typeof sign === 'undefined') {
 			sign = '+';
@@ -126,15 +166,31 @@ var US_FEDERAL_HOLIDAYS = [
 		return date;
 	};
 
+	/**
+	 * Find the business day which is n days from {moment} *this*
+	 *
+	 * @param {int} days: number of days
+	 * @returns {moment} - the nth business day from {moment} *this*
+	 */
 	moment.fn.subtractBusinessDay = function(days){
 		return this.addBusinessDay(days, '-');
 	};
 
+	/**
+	 * Find the next business day from {moment} *this*
+	 *
+	 * @returns {moment} - next business day from {moment} *this*
+	 */
 	moment.fn.nextBusinessDay = function() {
 		var date = this.clone();
 		return date.addBusinessDay(1);
 	};
 
+	/**
+	 * Find the previous day from {moment} *this*
+	 *
+	 * @returns {moment} - previous business day from {moment} *this*
+	 */
 	moment.fn.previousBusinessDay = function() {
 		var date = this.clone();
 		return date.subtractBusinessDay(1);
