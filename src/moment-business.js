@@ -1,8 +1,8 @@
 /*
  * moment_business (v1.0.1)
- * https://github.com/DaveTian/moment_business
+ * https://github.com/dstyle28/moment_business
  * The MIT License (MIT)
- * (c) 2014-2015 Zenefits
+ * Copyright(c) 2015 Dave Tian, Zenefits
  */
 
 
@@ -131,7 +131,7 @@ const US_FEDERAL_HOLIDAYS = [
 	};
 
 	/**
-	 * Find the business day which is n days from {moment} *this*
+	 * Mutates the original moment by adding # business days
 	 *
 	 * @param {int} days: number of days
 	 * @param {string} sign [optional]: '+' or '-'
@@ -168,7 +168,7 @@ const US_FEDERAL_HOLIDAYS = [
 	};
 
 	/**
-	 * Find the business day which is n days from {moment} *this*
+	 * Mutates the original moment by subtracting # business days
 	 *
 	 * @param {int} days: number of days
 	 * @returns {moment} - the nth business day from {moment} *this*
@@ -178,7 +178,7 @@ const US_FEDERAL_HOLIDAYS = [
 	};
 
 	/**
-	 * Find the next business day from {moment} *this*
+	 * Mutates the original moment by next business day
 	 *
 	 * @returns {moment} - next business day from {moment} *this*
 	 */
@@ -188,7 +188,7 @@ const US_FEDERAL_HOLIDAYS = [
 	};
 
 	/**
-	 * Find the previous day from {moment} *this*
+	 * Mutates the original moment by previous business day
 	 *
 	 * @returns {moment} - previous business day from {moment} *this*
 	 */
