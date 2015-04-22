@@ -1,6 +1,6 @@
 # moment-business (v1.0.1)
 
-momnet-business is an extension library for [Moment](http://momentjs.com/), with customiztion under US Federal Holidays and weekends.
+momnet-business is an extension library for [Momentjs](http://momentjs.com/), with customiztion under US Federal Holidays and weekends.
 
 ## Build Status 
 [![Circle build status](https://circleci.com/gh/dstyle28/moment_business.svg?style=shield)](https://circleci.com/gh/dstyle28/moment_business)
